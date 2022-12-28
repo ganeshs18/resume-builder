@@ -6,27 +6,12 @@
         Resume Builder
     </a>
 </nav>
-<div class="container">
-    <div>
-        <form>
+<div class="container my-4">
+    <div class="card">
+        <form class="card-text m-4">
             <div class="form-row row">
                 <div class="col-md-3 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5 pic-holder">
-                        <img id="profilePic" class="mt-2" width="150px"
-                            src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                        <Input class="uploadProfileInput" type="file" name="profile_pic" id="newProfilePhoto"
-                            accept="image/*" style="opacity: 0;" />
-                        <label for="newProfilePhoto" class="upload-file-block">
-                            <div class="text-center">
-                                <div class="mb-2">
-                                    <mat-icon>camera_alt</mat-icon>
-                                </div>
-                                <div class="text-uppercase">
-                                    Update <br /> Profile Photo
-                                </div>
-                            </div>
-                        </label>
-                    </div>
+                    <app-image-card></app-image-card>
                 </div>
                 <div class="form-group col-lg-4">
                     <label for="firstName">First Name</label>
@@ -75,47 +60,88 @@
                     </button>
                 </div>
             </div>
+            <div class="form-group">
+                <label for="summary">Professional summary</label>
+                <textarea (click)="openEditor()" class="form-control" id="summary" placeholder="e.g. 1234 Main St">
+                    </textarea>
+            </div>
+            <button type="button" class="btn btn-link text-start">
+                <mat-icon class="align-middle">add</mat-icon>Add Skills
+            </button>
+            <div class="form-row row">
+                <div class="form-group col-lg-4">
 
-            <div>
-                <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="htmlContent"></angular-editor>
-            </div>
-            <div class="html">
-                {{ htmlContent }}
-              </div>
-            <div class="form-group">
-                <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="e.g. 1234 Main St">
-            </div>
-            <div class="form-group">
-                <label for="inputAddress2">Address 2</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity">
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">State</label>
-                    <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                    </select>
+                <div class="form-group  col-lg-4 ">
+                    <label for="socialLink">Skills</label>
+                    <input type="text" class="form-control" id="socialLink" placeholder="e.g. Javascript">
                 </div>
-                <div class="form-group col-md-2">
-                    <label for="inputZip">Zip</label>
-                    <input type="text" class="form-control" id="inputZip">
+                <div class="form-group  col-lg-2 ">
+                    <button type="button" class="btn">
+                        <mat-icon class="align-middle">delete</mat-icon>
+                    </button>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                    <label class="form-check-label" for="gridCheck">
-                        Check me out
-                    </label>
+            <div class="card my-2">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h3 class="card-title">Work Experience</h3>
+                        <mat-icon class="text-end">add</mat-icon>
+                    </div>
+                    <div class="form-row row">
+                        <div class="form-group col-lg-5">
+                            <label for="firstName">Job Title</label>
+                            <input type="text" class="form-control" id="firstName"
+                                placeholder="e.g. Software Developer">
+                        </div>
+                        <div class="form-group col-lg-5">
+                            <label for="lastName">Employer</label>
+                            <input type="text" class="form-control" id="lastName"
+                                placeholder="e.g. Amazon private Ltd.">
+                        </div>
+                    </div>
+                    <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                            <label for="firstName">City</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="e.g. Chennai">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="lastName">State</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="lastName">Country</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="e.g. India">
+                        </div>
+                    </div>
+                    <div class="form-row row">
+                        <div class="form-group col-lg-5">
+                            <!-- <mat-form-field appearance="fill">
+                               <label for="">Start Date</label>
+                                <input matInput [matDatepicker]="picker">
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field> -->
+                            <label for="lastName">Start Date</label>
+                            <!-- <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle> -->
+                            <mat-datepicker #picker></mat-datepicker>
+                            <input type="date" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
+                        </div>
+                        <div class="form-group col-lg-5">
+                            <label for="lastName">End Date</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
+                        </div>
+                    </div>
+                    <div class="form-check my-2">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Currently I work here
+                        </label>
+                    </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Sign in</button>
+            <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>
 </div>
+<footer></footer>
