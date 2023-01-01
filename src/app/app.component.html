@@ -9,38 +9,40 @@
 <div class="container my-4">
     <div class="card">
         <form class="card-text m-4">
+            <h3 class="ps-3"><strong>Basic Details</strong></h3>
             <div class="form-row row">
-                <div class="col-md-3 border-right">
-                    <app-image-card></app-image-card>
-                </div>
-                <div class="form-group col-lg-4">
-                    <label for="firstName">First Name</label>
-                    <input type="text" class="form-control" id="firstName" placeholder="e.g. John">
-                </div>
-                <div class="form-group col-lg-4">
-                    <label for="lastName">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" placeholder="e.g. Deo">
-                </div>
-                <div class="form-group col-lg-4">
-                    <label for="mobile">Mobile no.</label>
-                    <input type="text" class="form-control" id="mobile" placeholder="e.g. 9212484844">
+                <app-image-card class="col-md-3 border-right"></app-image-card>
+                <div class="col-md-9 row">
+                    <div class="form-group col-lg-6">
+                        <label class="required" for="firstName">First Name</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="e.g. John">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="required" for="lastName">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Deo">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="required" for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="e.g. Johndeo@email.com">
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="profession">Profession.</label>
+                        <input type="text" class="form-control" id="profession" placeholder="e.g. Software Engineer">
+                    </div>
+
                 </div>
             </div>
             <div class="form-row row">
-                <div class="form-group col-lg-6">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="e.g. Johndeo@email.com">
-                </div>
-                <div class="form-group col-lg-6">
-                    <label for="profession">Profession.</label>
-                    <input type="text" class="form-control" id="profession" placeholder="e.g. Software Engineer">
+                <div class="form-group col-sm-6">
+                    <label class="required" for="mobile">Mobile no.</label>
+                    <input type="text" class="form-control is-invalid" id="mobile" placeholder="e.g. 9212484844">
+                    <div class="invalid-feedback">
+                        Please choose a username.
+                    </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-link text-start">
-                <mat-icon class="align-middle">add</mat-icon>Add Social Links
-            </button>
             <div class="form-row row">
-                <div class="form-group col-lg-5">
+                <div class="form-group col-5">
                     <label for="inputAddress">Social Website</label>
                     <select id="inputState" class="form-select">
                         <option selected>Choose...</option>
@@ -50,97 +52,156 @@
                         <option>Website</option>
                     </select>
                 </div>
-                <div class="form-group  col-lg-5 ">
+                <div class="form-group  col-5">
                     <label for="socialLink">Social Link</label>
                     <input type="text" class="form-control" id="socialLink" placeholder="e.g. www.website.com">
                 </div>
-                <div class="form-group  col-lg-2 ">
-                    <button type="button" class="btn">
-                        <mat-icon class="align-middle">delete</mat-icon>
-                    </button>
+                <div class="form-group  col-2">
+                    <mat-icon class="clickable d-block delete-icon">delete</mat-icon>
                 </div>
             </div>
+
+            <button type="button" class="btn btn-link link-button ps-0">
+                <mat-icon class="align-middle">add</mat-icon>Add Social Links
+            </button>
             <div class="form-group">
                 <label for="summary">Professional summary</label>
-                <textarea (click)="openEditor()" class="form-control" id="summary" placeholder="e.g. 1234 Main St">
-                    </textarea>
+                <angular-editor class="form-control clickable no-focus no-border"
+                    (click)="openEditor('Professional Summary')" placeholder="Enter text" [config]="editorConfig">
+                </angular-editor>
             </div>
-            <button type="button" class="btn btn-link text-start">
-                <mat-icon class="align-middle">add</mat-icon>Add Skills
-            </button>
+
             <div class="form-row row">
                 <div class="form-group col-lg-4">
-
+                    <label class="required" for="socialLink">Rating</label>
                 </div>
                 <div class="form-group  col-lg-4 ">
-                    <label for="socialLink">Skills</label>
+                    <label class="required" for="socialLink">Skill</label>
                     <input type="text" class="form-control" id="socialLink" placeholder="e.g. Javascript">
                 </div>
-                <div class="form-group  col-lg-2 ">
-                    <button type="button" class="btn">
-                        <mat-icon class="align-middle">delete</mat-icon>
-                    </button>
+                <div class="form-group col-lg-2">
+                    <mat-icon class="clickable delete-icon">delete</mat-icon>
                 </div>
             </div>
-            <div class="card my-2">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <h3 class="card-title">Work Experience</h3>
-                        <mat-icon class="text-end">add</mat-icon>
+            <button type="button" class="btn btn-link link-button ps-0">
+                <mat-icon class="align-middle">add</mat-icon>Add Skills
+            </button>
+            <hr>
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h3 class="card-title"><strong>Work Experience 1</strong></h3>
+                    <mat-icon style="color: #0d6efd;" class="text-end clickable">delete</mat-icon>
+                </div>
+                <div class="form-row row">
+                    <div class="form-group col-lg-5">
+                        <label class="required" for="firstName">Job Title</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="e.g. Software Developer">
                     </div>
-                    <div class="form-row row">
-                        <div class="form-group col-lg-5">
-                            <label for="firstName">Job Title</label>
-                            <input type="text" class="form-control" id="firstName"
-                                placeholder="e.g. Software Developer">
-                        </div>
-                        <div class="form-group col-lg-5">
-                            <label for="lastName">Employer</label>
-                            <input type="text" class="form-control" id="lastName"
-                                placeholder="e.g. Amazon private Ltd.">
-                        </div>
-                    </div>
-                    <div class="form-row row">
-                        <div class="form-group col-lg-4">
-                            <label for="firstName">City</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="e.g. Chennai">
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <label for="lastName">State</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <label for="lastName">Country</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="e.g. India">
-                        </div>
-                    </div>
-                    <div class="form-row row">
-                        <div class="form-group col-lg-5">
-                            <!-- <mat-form-field appearance="fill">
-                               <label for="">Start Date</label>
-                                <input matInput [matDatepicker]="picker">
-                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
-                              </mat-form-field> -->
-                            <label for="lastName">Start Date</label>
-                            <!-- <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle> -->
-                            <mat-datepicker #picker></mat-datepicker>
-                            <input type="date" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
-                        </div>
-                        <div class="form-group col-lg-5">
-                            <label for="lastName">End Date</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
-                        </div>
-                    </div>
-                    <div class="form-check my-2">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Currently I work here
-                        </label>
+                    <div class="form-group col-lg-5">
+                        <label class="required" for="lastName">Employer</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Amazon private Ltd.">
                     </div>
                 </div>
+
+                <div class="form-row row">
+                    <div class="form-group col-lg-5">
+                        <label class="required" for="lastName">Start Date</label>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <input type="date" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <label [class.required] for="lastName">End Date</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
+                    </div>
+                </div>
+                <div class="form-row row">
+                    <div class="form-group col-lg-4">
+                        <label class="required" for="firstName">City</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="e.g. Chennai">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label class="required" for="lastName">State</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label class="required" for="lastName">Country</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="e.g. India">
+                    </div>
+                </div>
+                <div class="form-check my-2">
+                    <input class="form-check-input clickable" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label clickable required" for="flexCheckChecked">
+                        Currently I work here
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="summary">Work Experience Description</label>
+                    <angular-editor class="form-control clickable no-focus no-border"
+                        (click)="openEditor('Work Experience Description')" placeholder="Enter text"
+                        [config]="editorConfig">
+                    </angular-editor>
+                </div>
+                <button type="button" class="btn btn-link link-button ps-0">
+                    <mat-icon class="align-middle">add</mat-icon>Work Experience
+                </button>
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <hr>
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h3 class="card-title"><strong>Education Detail 1</strong></h3>
+                    <mat-icon style="color: #0d6efd;" class="text-end clickable">delete</mat-icon>
+                </div>
+                <div class="form-row row">
+                    <div class="form-group col-lg-5">
+                        <label class="required" for="firstName">Institution Name</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="e.g. Anna University">
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <label class="required" for="lastName">Institution location</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Delhi,India">
+                    </div>
+                </div>
+                <div class="form-row row">
+                    <div class="form-group col-lg-5">
+                        <label class="required" for="firstName">Degree</label>
+                        <select id="inputState" class="form-select">
+                            <option selected>Choose...</option>
+                            <option>Hsc</option>
+                            <option>SSLC</option>
+                            <option>Under Gradute</option>
+                            <option>Post Graduate</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <label for="lastName">Field of Study</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
+                    </div>
+                </div>
+                <div class="form-row row">
+                    <div class="form-group col-lg-5">
+                        <label class="required" for="lastName">Start Date</label>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <input type="date" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
+                    </div>
+                    <div class="form-group col-lg-5">
+                        <label class="required" for="lastName">End Date</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="summary">Education Description</label>
+                    <angular-editor class="form-control clickable no-focus no-border"
+                        (click)="openEditor('Education Description')" placeholder="Enter text" [config]="editorConfig">
+                    </angular-editor>
+
+                </div>
+                <button type="button" class="btn btn-link link-button ps-0">
+                    <mat-icon class="align-middle">add</mat-icon>Education
+                </button>
+            </div>
+            <div class="d-flex flex-row-reverse justify-content-between">
+                <button type="submit" class="btn btn-primary">Generate</button>
+            </div>
         </form>
     </div>
 </div>
