@@ -6,7 +6,7 @@ export const editorConfig: AngularEditorConfig = {
   spellcheck: true,
   outline: false,
   enableToolbar: true,
-  showToolbar: false,
+  showToolbar: true,
   placeholder: 'Enter text here...',
   fonts: [
     { class: 'arial', name: 'Arial' },

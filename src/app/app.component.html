@@ -26,7 +26,7 @@
                         <input type="email" class="form-control" id="email" placeholder="e.g. Johndeo@email.com">
                     </div>
                     <div class="form-group col-lg-6">
-                        <label for="profession">Profession.</label>
+                        <label for="profession">Profession</label>
                         <input type="text" class="form-control" id="profession" placeholder="e.g. Software Engineer">
                     </div>
 
@@ -43,9 +43,9 @@
             </div>
             <div class="form-row row">
                 <div class="form-group col-5">
-                    <label for="inputAddress">Social Website</label>
-                    <select id="inputState" class="form-select">
-                        <option selected>Choose...</option>
+                    <label for="socialSite">Social Website</label>
+                    <select id="socialSite" name="socialSite" class="form-select">
+                        <option selected>Select</option>
                         <option>Linkedin</option>
                         <option>Github</option>
                         <option>Twitter</option>
@@ -54,14 +54,15 @@
                 </div>
                 <div class="form-group  col-5">
                     <label for="socialLink">Social Link</label>
-                    <input type="text" class="form-control" id="socialLink" placeholder="e.g. www.website.com">
+                    <input type="text" class="form-control" id="socialLink" name="socialLink"
+                        placeholder="e.g. www.website.com">
                 </div>
                 <div class="form-group  col-2">
-                    <mat-icon class="clickable d-block delete-icon">delete</mat-icon>
+                    <mat-icon matTooltip="Delete Social Site" class="clickable d-block delete-icon">delete</mat-icon>
                 </div>
             </div>
 
-            <button type="button" class="btn btn-link link-button ps-0">
+            <button matTooltip="Add additional Social link" type="button" class="btn btn-link link-button ps-0">
                 <mat-icon class="align-middle">add</mat-icon>Add Social Links
             </button>
             <div class="form-group">
@@ -74,23 +75,25 @@
             <div class="form-row row">
                 <div class="form-group col-lg-4">
                     <label class="required" for="socialLink">Rating</label>
+                    <ngx-star-rating id="socialLink"></ngx-star-rating>
                 </div>
                 <div class="form-group  col-lg-4 ">
                     <label class="required" for="socialLink">Skill</label>
                     <input type="text" class="form-control" id="socialLink" placeholder="e.g. Javascript">
                 </div>
                 <div class="form-group col-lg-2">
-                    <mat-icon class="clickable delete-icon">delete</mat-icon>
+                    <mat-icon matTooltip="Delete Skill" class="clickable delete-icon">delete</mat-icon>
                 </div>
             </div>
-            <button type="button" class="btn btn-link link-button ps-0">
+            <button matTooltip="Add additional skill" type="button" class="btn btn-link link-button ps-0">
                 <mat-icon class="align-middle">add</mat-icon>Add Skills
             </button>
             <hr>
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h3 class="card-title"><strong>Work Experience 1</strong></h3>
-                    <mat-icon style="color: #0d6efd;" class="text-end clickable">delete</mat-icon>
+                    <mat-icon matTooltip="Delete Work Experience Details" style="color: #0d6efd;"
+                        class="text-end clickable">delete</mat-icon>
                 </div>
                 <div class="form-row row">
                     <div class="form-group col-lg-5">
@@ -104,10 +107,13 @@
                 </div>
 
                 <div class="form-row row">
-                    <div class="form-group col-lg-5">
-                        <label class="required" for="lastName">Start Date</label>
+                    <div class="form-group col-lg-5 ">
+                        <label for="startDate">Start Date</label>
+                        <input class="form-control date-input clickable" readonly="true" id="startDate" matInput
+                            [matDatepicker]="picker" (click)="toggle._open($event)">
+                        <mat-datepicker-toggle #toggle style="display: none;" matIconSuffix [for]="picker">
+                        </mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
-                        <input type="date" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
                     </div>
                     <div class="form-group col-lg-5">
                         <label [class.required] for="lastName">End Date</label>
@@ -141,15 +147,16 @@
                         [config]="editorConfig">
                     </angular-editor>
                 </div>
-                <button type="button" class="btn btn-link link-button ps-0">
-                    <mat-icon class="align-middle">add</mat-icon>Work Experience
+                <button matTooltip="Add additional Work Experience" type="button" class="btn btn-link link-button ps-0">
+                    <mat-icon class="align-middle">add</mat-icon>Add Work Experience
                 </button>
             </div>
             <hr>
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h3 class="card-title"><strong>Education Detail 1</strong></h3>
-                    <mat-icon style="color: #0d6efd;" class="text-end clickable">delete</mat-icon>
+                    <mat-icon matTooltip="Delete Education Details" style="color: #0d6efd;" class="text-end clickable">
+                        delete</mat-icon>
                 </div>
                 <div class="form-row row">
                     <div class="form-group col-lg-5">
@@ -195,8 +202,9 @@
                     </angular-editor>
 
                 </div>
-                <button type="button" class="btn btn-link link-button ps-0">
-                    <mat-icon class="align-middle">add</mat-icon>Education
+                <button matTooltip="Add additionalEducation Details" type="button"
+                    class="btn btn-link link-button ps-0">
+                    <mat-icon class="align-middle">add</mat-icon>Add Education
                 </button>
             </div>
             <div class="d-flex flex-row-reverse justify-content-between">

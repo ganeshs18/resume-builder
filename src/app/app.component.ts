@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDatepickerToggle } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { EditorModalComponent } from './editor-modal/editor-modal.component';
@@ -18,8 +19,9 @@ export class AppComponent {
     showToolbar: false,
     editable: false
   }
+  toggle!: MatDatepickerToggle<any>;
   constructor(public dialog: MatDialog) {
-
+    // this.toggle._open()
   }
 
   openEditor(title: string, content?: any) {
