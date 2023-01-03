@@ -8,26 +8,30 @@
 </nav>
 <div class="container my-4">
     <div class="card">
-        <form class="card-text m-4">
+        <form class="card-text m-4" [formGroup]="resumeForm">
             <h3 class="ps-3"><strong>Basic Details</strong></h3>
             <div class="form-row row">
                 <app-image-card class="col-md-3 border-right"></app-image-card>
                 <div class="col-md-9 row">
                     <div class="form-group col-lg-6">
                         <label class="required" for="firstName">First Name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="e.g. John">
+                        <input formControlName="firstName" type="text" class="form-control" id="firstName"
+                            placeholder="e.g. John">
                     </div>
                     <div class="form-group col-lg-6">
                         <label class="required" for="lastName">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Deo">
+                        <input formControlName="lastName" type="text" class="form-control" id="lastName"
+                            placeholder="e.g. Deo">
                     </div>
                     <div class="form-group col-lg-6">
                         <label class="required" for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="e.g. Johndeo@email.com">
+                        <input formControlName="email" type="email" class="form-control" id="email"
+                            placeholder="e.g. Johndeo@email.com">
                     </div>
                     <div class="form-group col-lg-6">
                         <label for="profession">Profession</label>
-                        <input type="text" class="form-control" id="profession" placeholder="e.g. Software Engineer">
+                        <input formControlName="profession" type="text" class="form-control" id="profession"
+                            placeholder="e.g. Software Engineer">
                     </div>
 
                 </div>
@@ -35,16 +39,17 @@
             <div class="form-row row">
                 <div class="form-group col-sm-6">
                     <label class="required" for="mobile">Mobile no.</label>
-                    <input type="text" class="form-control is-invalid" id="mobile" placeholder="e.g. 9212484844">
+                    <input formControlName="mobile" type="text" class="form-control is-invalid" id="mobile"
+                        placeholder="e.g. 9212484844">
                     <div class="invalid-feedback">
                         Please choose a username.
                     </div>
                 </div>
             </div>
-            <div class="form-row row">
-                <div class="form-group col-5">
+            <div *ngFor="let social of socialFormArrayControls;let i = index" class="form-row row">
+                <div [formGroup]="social" class="form-group col-5">
                     <label for="socialSite">Social Website</label>
-                    <select id="socialSite" name="socialSite" class="form-select">
+                    <select formControlname="siteName" id="socialSite" name="socialSite" class="form-select">
                         <option selected>Select</option>
                         <option>Linkedin</option>
                         <option>Github</option>
@@ -54,22 +59,25 @@
                 </div>
                 <div class="form-group  col-5">
                     <label for="socialLink">Social Link</label>
-                    <input type="text" class="form-control" id="socialLink" name="socialLink"
+                    <input formControlname="url" type="text" class="form-control" id="socialLink" name="socialLink"
                         placeholder="e.g. www.website.com">
                 </div>
                 <div class="form-group  col-2">
-                    <mat-icon matTooltip="Delete Social Site" class="clickable d-block delete-icon">delete</mat-icon>
+                    <mat-icon matTooltip="Delete Social Site" class="clickable d-block delete-icon"
+                        (click)="deleteSocialLink(i)">delete</mat-icon>
                 </div>
             </div>
 
-            <button matTooltip="Add additional Social link" type="button" class="btn btn-link link-button ps-0">
+            <button (click)="addSocialLink()" matTooltip="Add additional Social link" type="button"
+                class="btn btn-link link-button ps-0">
                 <mat-icon class="align-middle">add</mat-icon>Add Social Links
             </button>
             <div class="form-group">
                 <label for="summary">Professional summary</label>
-                <angular-editor class="form-control clickable no-focus no-border"
-                    (click)="openEditor('Professional Summary')" placeholder="Enter text" [config]="editorConfig">
-                </angular-editor>
+                <div class="form-control clickable no-focus no-border editor-content"
+                    (click)="openEditor('Professional Summary', resumeForm.get('profSummary'))"
+                    [innerHTML]="resumeForm.get('profSummary')?.value || ''">
+                </div>
             </div>
 
             <div class="form-row row">
@@ -117,7 +125,12 @@
                     </div>
                     <div class="form-group col-lg-5">
                         <label [class.required] for="lastName">End Date</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
+                        <input class="form-control date-input clickable" readonly="true" id="WorkEndDate" matInput
+                            [matDatepicker]="WorkEndDatepicker" (click)="WorkEndDatetoggle._open($event)">
+                        <mat-datepicker-toggle #WorkEndDatetoggle style="display: none;" matIconSuffix
+                            [for]="WorkEndDatepicker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #WorkEndDatepicker></mat-datepicker>
                     </div>
                 </div>
                 <div class="form-row row">
@@ -141,8 +154,8 @@
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="summary">Work Experience Description</label>
-                    <angular-editor class="form-control clickable no-focus no-border"
+                    <label for="workDescription">Work Experience Description</label>
+                    <angular-editor id="workDescription" class="form-control clickable no-focus no-border"
                         (click)="openEditor('Work Experience Description')" placeholder="Enter text"
                         [config]="editorConfig">
                     </angular-editor>
@@ -188,16 +201,27 @@
                     <div class="form-group col-lg-5">
                         <label class="required" for="lastName">Start Date</label>
                         <mat-datepicker #picker></mat-datepicker>
-                        <input type="date" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
+                        <input class="form-control date-input clickable" readonly="true" id="EducationstartDate"
+                            matInput [matDatepicker]="EducationstartDatepicker"
+                            (click)="EducationstartDatetoggle._open($event)">
+                        <mat-datepicker-toggle #EducationstartDatetoggle style="display: none;" matIconSuffix
+                            [for]="EducationstartDatepicker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #EducationstartDatepicker></mat-datepicker>
                     </div>
                     <div class="form-group col-lg-5">
                         <label class="required" for="lastName">End Date</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
+                        <input class="form-control date-input clickable" readonly="true" id="EducationEndDate" matInput
+                            [matDatepicker]="EducationEndDatepicker" (click)="EducationEndDatetoggle._open($event)">
+                        <mat-datepicker-toggle #EducationEndDatetoggle style="display: none;" matIconSuffix
+                            [for]="EducationEndDatepicker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #EducationEndDatepicker></mat-datepicker>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="summary">Education Description</label>
-                    <angular-editor class="form-control clickable no-focus no-border"
+                    <label for="EduDescription">Education Description</label>
+                    <angular-editor id="EduDescription" class="form-control clickable no-focus no-border"
                         (click)="openEditor('Education Description')" placeholder="Enter text" [config]="editorConfig">
                     </angular-editor>
 
