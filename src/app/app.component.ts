@@ -45,10 +45,17 @@ export class AppComponent {
       profession: new FormControl(''),
       mobile: new FormControl('', [Validators.required, Validators.pattern(/[6-9][0-9]{9}/)]),
       social: this.formBuilder.array([this.getSocialForm()]),
-      profSummary: new FormControl('')
+      profSummary: new FormControl(''),
+      skills: this.formBuilder.array([this.getSkillForm()]),
+      work: this.formBuilder.array([this.getWorkForm()]),
+      education: this.formBuilder.array([this.getEducationForm()]),
+      // sections:,
     })
   }
 
+  getFormControl(control: AbstractControl | null): FormControl {
+    return control as FormControl;
+  }
 
   getSocialForm(): FormGroup {
     return this.formBuilder.group({
@@ -73,8 +80,93 @@ export class AppComponent {
     this.socialFormArray.removeAt(index);
   }
 
-  getFormControl(control: AbstractControl | null): FormControl {
-    return control as FormControl;
+
+  getSkillForm(): FormGroup {
+    return this.formBuilder.group({
+      skillName: new FormControl('', [Validators.required]),
+      skillRating: new FormControl(0, [Validators.required])
+    })
+  }
+
+  get skillsFormArrayControls(): FormGroup[] {
+    return this.skillsFormArray.controls as FormGroup[];
+  }
+
+  private get skillsFormArray(): FormArray {
+    return this.resumeForm.get('skills') as FormArray;
+  }
+
+  addSkill(): void {
+    this.skillsFormArray.push(this.getSkillForm());
+  }
+
+  deleteSkill(index: number): void {
+    this.skillsFormArray.removeAt(index);
+  }
+
+  // --------------- // 
+
+  getWorkForm(): FormGroup {
+    return this.formBuilder.group({
+      jobTitle: new FormControl('', [Validators.required]),
+      employer: new FormControl('', [Validators.required]),
+      startDate: new FormControl('', [Validators.required]),
+      endDate: new FormControl('',),
+      workDesc: new FormControl('', [Validators.required]),
+      isCurrentlyWorking: new FormControl(false),
+      city: new FormControl('', [Validators.required]),
+      state: new FormControl('', [Validators.required]),
+      country: new FormControl('', [Validators.required])
+    })
+  }
+
+  get workFormArrayControls(): FormGroup[] {
+    return this.workFormArray.controls as FormGroup[];
+  }
+
+  private get workFormArray(): FormArray {
+    return this.resumeForm.get('work') as FormArray;
+  }
+
+  addWork(): void {
+    this.workFormArray.push(this.getWorkForm());
+  }
+
+  deleteWork(index: number): void {
+    this.workFormArray.removeAt(index);
+  }
+
+  getEducationForm(): FormGroup {
+    return this.formBuilder.group({
+      name: new FormControl('', [Validators.required]),
+      location: new FormControl('', [Validators.required]),
+      degreeType: new FormControl('', [Validators.required]),
+      field: new FormControl('', [Validators.required]),
+      startDate: new FormControl('', [Validators.required]),
+      endDate: new FormControl('',),
+      educationDesc: new FormControl(''),
+    })
+  }
+
+  get educationFormArrayControls(): FormGroup[] {
+    return this.educationFormArray.controls as FormGroup[];
+  }
+
+  private get educationFormArray(): FormArray {
+    return this.resumeForm.get('education') as FormArray;
+  }
+
+  addEducation(): void {
+    this.educationFormArray.push(this.getEducationForm());
+  }
+
+  deleteEducation(index: number): void {
+    this.educationFormArray.removeAt(index);
+  }
+
+  onSubmit(){
+    this.resumeForm.markAllAsTouched();
+    console.log(this.resumeForm.value)
   }
 }
 

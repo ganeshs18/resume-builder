@@ -47,3 +47,7 @@ form .required:after {
 .editor-content{
     min-height: 100px;
 }
+
+.star:hover{
+    cursor: pointer !important;
+}

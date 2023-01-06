@@ -46,10 +46,17 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <label for="summary">Professional summary</label>
+                <div class="form-control clickable no-focus no-border editor-content"
+                    (click)="openEditor('Professional Summary', resumeForm.get('profSummary'))"
+                    [innerHTML]="resumeForm.get('profSummary')?.value || ''">
+                </div>
+            </div>
             <div *ngFor="let social of socialFormArrayControls;let i = index" class="form-row row">
                 <div [formGroup]="social" class="form-group col-5">
-                    <label for="socialSite">Social Website</label>
-                    <select formControlname="siteName" id="socialSite" name="socialSite" class="form-select">
+                    <label [for]="'socialSite-'+i">Social Website</label>
+                    <select formControlname="siteName" [id]="'socialSite-'+i" class="form-select">
                         <option selected>Select</option>
                         <option>Linkedin</option>
                         <option>Github</option>
@@ -58,9 +65,9 @@
                     </select>
                 </div>
                 <div class="form-group  col-5">
-                    <label for="socialLink">Social Link</label>
-                    <input formControlname="url" type="text" class="form-control" id="socialLink" name="socialLink"
-                        placeholder="e.g. www.website.com">
+                    <label [for]="'socialLink-'+i">Social Link</label>
+                    <input formControlname="url" type="text" class="form-control" [id]="'sociallink-'+i"
+                        name="socialLink" placeholder="e.g. www.website.com">
                 </div>
                 <div class="form-group  col-2">
                     <mat-icon matTooltip="Delete Social Site" class="clickable d-block delete-icon"
@@ -72,167 +79,184 @@
                 class="btn btn-link link-button ps-0">
                 <mat-icon class="align-middle">add</mat-icon>Add Social Links
             </button>
-            <div class="form-group">
-                <label for="summary">Professional summary</label>
-                <div class="form-control clickable no-focus no-border editor-content"
-                    (click)="openEditor('Professional Summary', resumeForm.get('profSummary'))"
-                    [innerHTML]="resumeForm.get('profSummary')?.value || ''">
+           
+            <ng-container *ngFor="let skillForm of skillsFormArrayControls;let i = index">
+                <div [formGroup]="skillForm" class="form-row row">
+                    <div class="form-group col-6">
+                        <label class="required" [for]="'skillRating-'+i">Rating</label>
+                        <ngx-star-rating formControlName="skillRating" [id]="'skillRating-'+i" class="clickable">
+                        </ngx-star-rating>
+                    </div>
+                    <div class="form-group  col-4 ">
+                        <label class="required" [for]="'skillName-'+i">Skill</label>
+                        <input formControlName="skillName" type="text" class="form-control" [id]="'skillName-'+i"
+                            placeholder="e.g. Javascript">
+                    </div>
+                    <div class="form-group col-2">
+                        <mat-icon (click)="deleteSkill(i)" matTooltip="Delete Skill" class="clickable delete-icon">
+                            delete</mat-icon>
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-row row">
-                <div class="form-group col-lg-4">
-                    <label class="required" for="socialLink">Rating</label>
-                    <ngx-star-rating id="socialLink"></ngx-star-rating>
-                </div>
-                <div class="form-group  col-lg-4 ">
-                    <label class="required" for="socialLink">Skill</label>
-                    <input type="text" class="form-control" id="socialLink" placeholder="e.g. Javascript">
-                </div>
-                <div class="form-group col-lg-2">
-                    <mat-icon matTooltip="Delete Skill" class="clickable delete-icon">delete</mat-icon>
-                </div>
-            </div>
-            <button matTooltip="Add additional skill" type="button" class="btn btn-link link-button ps-0">
+            </ng-container>
+            <button (click)="addSkill()" matTooltip="Add additional skill" type="button"
+                class="btn btn-link link-button ps-0">
                 <mat-icon class="align-middle">add</mat-icon>Add Skills
             </button>
             <hr>
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h3 class="card-title"><strong>Work Experience 1</strong></h3>
-                    <mat-icon matTooltip="Delete Work Experience Details" style="color: #0d6efd;"
-                        class="text-end clickable">delete</mat-icon>
-                </div>
-                <div class="form-row row">
-                    <div class="form-group col-lg-5">
-                        <label class="required" for="firstName">Job Title</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="e.g. Software Developer">
+            <ng-container *ngFor="let workForm of workFormArrayControls;let i = index">
+                <div [formGroup]="workForm" class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h3 class="card-title"><strong>Work Experience {{i+1}}</strong></h3>
+                        <mat-icon (click)="deleteWork(i)" matTooltip="Delete Work Experience Details"
+                            style="color: #0d6efd;" class="text-end clickable">delete</mat-icon>
                     </div>
-                    <div class="form-group col-lg-5">
-                        <label class="required" for="lastName">Employer</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Amazon private Ltd.">
+                    <div class="form-row row">
+                        <div class="form-group col-lg-5">
+                            <label class="required" for="firstName">Job Title</label>
+                            <input formControlName="jobTitle" type="text" class="form-control" id="firstName"
+                                placeholder="e.g. Software Developer">
+                        </div>
+                        <div class="form-group col-lg-5">
+                            <label class="required" for="lastName">Employer</label>
+                            <input formControlName="employer" type="text" class="form-control" id="lastName"
+                                placeholder="e.g. Amazon private Ltd.">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-row row">
-                    <div class="form-group col-lg-5 ">
-                        <label for="startDate">Start Date</label>
-                        <input class="form-control date-input clickable" readonly="true" id="startDate" matInput
-                            [matDatepicker]="picker" (click)="toggle._open($event)">
-                        <mat-datepicker-toggle #toggle style="display: none;" matIconSuffix [for]="picker">
-                        </mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
+                    <div class="form-row row">
+                        <div class="form-group col-lg-5 ">
+                            <label for="startDate">Start Date</label>
+                            <input formControlName="startDate" class="form-control date-input clickable" readonly="true"
+                                id="startDate" matInput [matDatepicker]="picker" (click)="toggle._open($event)">
+                            <mat-datepicker-toggle #toggle style="display: none;" matIconSuffix [for]="picker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </div>
+                        <div class="form-group col-lg-5">
+                            <label [class.required] for="lastName">End Date</label>
+                            <input formControlName="endDate" class="form-control date-input clickable" readonly="true"
+                                id="WorkEndDate" matInput [matDatepicker]="WorkEndDatepicker"
+                                (click)="WorkEndDatetoggle._open($event)">
+                            <mat-datepicker-toggle #WorkEndDatetoggle style="display: none;" matIconSuffix
+                                [for]="WorkEndDatepicker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #WorkEndDatepicker></mat-datepicker>
+                        </div>
                     </div>
-                    <div class="form-group col-lg-5">
-                        <label [class.required] for="lastName">End Date</label>
-                        <input class="form-control date-input clickable" readonly="true" id="WorkEndDate" matInput
-                            [matDatepicker]="WorkEndDatepicker" (click)="WorkEndDatetoggle._open($event)">
-                        <mat-datepicker-toggle #WorkEndDatetoggle style="display: none;" matIconSuffix
-                            [for]="WorkEndDatepicker">
-                        </mat-datepicker-toggle>
-                        <mat-datepicker #WorkEndDatepicker></mat-datepicker>
+                    <div class="form-row row">
+                        <div class="form-group col-lg-4">
+                            <label class="required" for="firstName">City</label>
+                            <input formControlName="city" type="text" class="form-control" id="firstName"
+                                placeholder="e.g. Chennai">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label class="required" for="lastName">State</label>
+                            <input formControlName="state" type="text" class="form-control" id="lastName"
+                                placeholder="e.g. Tamil Nadu">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label class="required" for="lastName">Country</label>
+                            <input formControlName="country" type="text" class="form-control" id="lastName"
+                                placeholder="e.g. India">
+                        </div>
                     </div>
+                    <div class="form-check my-2">
+                        <input formControlName="isCurrentlyWorking" class="form-check-input clickable" type="checkbox">
+                        <label class="form-check-label clickable required" for="flexCheckChecked">
+                            Currently I work here
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="workDescription">Work Experience Description</label>
+                        <div class="form-control clickable no-focus no-border editor-content"
+                            (click)="openEditor('Work Experience Description', workForm.get('workDesc'))"
+                            [innerHTML]="workForm.get('workDesc')?.value || ''">
+                        </div>
+                    </div>
+
                 </div>
-                <div class="form-row row">
-                    <div class="form-group col-lg-4">
-                        <label class="required" for="firstName">City</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="e.g. Chennai">
-                    </div>
-                    <div class="form-group col-lg-4">
-                        <label class="required" for="lastName">State</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
-                    </div>
-                    <div class="form-group col-lg-4">
-                        <label class="required" for="lastName">Country</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="e.g. India">
-                    </div>
-                </div>
-                <div class="form-check my-2">
-                    <input class="form-check-input clickable" type="checkbox" value="" id="flexCheckChecked" checked>
-                    <label class="form-check-label clickable required" for="flexCheckChecked">
-                        Currently I work here
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="workDescription">Work Experience Description</label>
-                    <angular-editor id="workDescription" class="form-control clickable no-focus no-border"
-                        (click)="openEditor('Work Experience Description')" placeholder="Enter text"
-                        [config]="editorConfig">
-                    </angular-editor>
-                </div>
-                <button matTooltip="Add additional Work Experience" type="button" class="btn btn-link link-button ps-0">
-                    <mat-icon class="align-middle">add</mat-icon>Add Work Experience
-                </button>
-            </div>
+            </ng-container>
+            <button (click)="addWork()" matTooltip="Add additional Work Experience" type="button"
+                class="btn btn-link link-button ps-0">
+                <mat-icon class="align-middle">add</mat-icon>Add Work Experience
+            </button>
             <hr>
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h3 class="card-title"><strong>Education Detail 1</strong></h3>
-                    <mat-icon matTooltip="Delete Education Details" style="color: #0d6efd;" class="text-end clickable">
-                        delete</mat-icon>
-                </div>
-                <div class="form-row row">
-                    <div class="form-group col-lg-5">
-                        <label class="required" for="firstName">Institution Name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="e.g. Anna University">
+            <ng-container *ngFor="let educationForm of educationFormArrayControls;let i = index">
+                <div [formGroup]="educationForm" class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h3 class="card-title"><strong>Education Detail {{i+1}}</strong></h3>
+                        <mat-icon (click)="deleteEducation(i)" matTooltip="Delete Education Details"
+                            style="color: #0d6efd;" class="text-end clickable">
+                            delete</mat-icon>
                     </div>
-                    <div class="form-group col-lg-5">
-                        <label class="required" for="lastName">Institution location</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Delhi,India">
+                    <div class="form-row row">
+                        <div class="form-group col-lg-5">
+                            <label class="required" for="firstName">Institution Name</label>
+                            <input formControlName="name" type="text" class="form-control" id="firstName"
+                                placeholder="e.g. Anna University">
+                        </div>
+                        <div class="form-group col-lg-5">
+                            <label class="required" for="lastName">Institution location</label>
+                            <input formControlName="location" type="text" class="form-control" id="lastName"
+                                placeholder="e.g. Delhi,India">
+                        </div>
                     </div>
-                </div>
-                <div class="form-row row">
-                    <div class="form-group col-lg-5">
-                        <label class="required" for="firstName">Degree</label>
-                        <select id="inputState" class="form-select">
-                            <option selected>Choose...</option>
-                            <option>Hsc</option>
-                            <option>SSLC</option>
-                            <option>Under Gradute</option>
-                            <option>Post Graduate</option>
-                        </select>
+                    <div class="form-row row">
+                        <div class="form-group col-lg-5">
+                            <label class="required" for="firstName">Degree</label>
+                            <select formControlName="degreeType" id="inputState" class="form-select">
+                                <option selected>Choose...</option>
+                                <option>HSC</option>
+                                <option>SSLC</option>
+                                <option>Under Gradute</option>
+                                <option>Post Graduate</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-5">
+                            <label for="lastName">Field of Study</label>
+                            <input formControlName="field" type="text" class="form-control" id="lastName"
+                                placeholder="e.g. Tamil Nadu">
+                        </div>
                     </div>
-                    <div class="form-group col-lg-5">
-                        <label for="lastName">Field of Study</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="e.g. Tamil Nadu">
+                    <div class="form-row row">
+                        <div class="form-group col-lg-5">
+                            <label class="required" for="lastName">Start Date</label>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <input formControlName="startDate" class="form-control date-input clickable" readonly="true"
+                                id="EducationstartDate" matInput [matDatepicker]="EducationstartDatepicker"
+                                (click)="EducationstartDatetoggle._open($event)">
+                            <mat-datepicker-toggle #EducationstartDatetoggle style="display: none;" matIconSuffix
+                                [for]="EducationstartDatepicker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #EducationstartDatepicker></mat-datepicker>
+                        </div>
+                        <div class="form-group col-lg-5">
+                            <label class="required" for="lastName">End Date</label>
+                            <input formControlName="endDate" class="form-control date-input clickable" readonly="true"
+                                id="EducationEndDate" matInput [matDatepicker]="EducationEndDatepicker"
+                                (click)="EducationEndDatetoggle._open($event)">
+                            <mat-datepicker-toggle #EducationEndDatetoggle style="display: none;" matIconSuffix
+                                [for]="EducationEndDatepicker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #EducationEndDatepicker></mat-datepicker>
+                        </div>
                     </div>
-                </div>
-                <div class="form-row row">
-                    <div class="form-group col-lg-5">
-                        <label class="required" for="lastName">Start Date</label>
-                        <mat-datepicker #picker></mat-datepicker>
-                        <input class="form-control date-input clickable" readonly="true" id="EducationstartDate"
-                            matInput [matDatepicker]="EducationstartDatepicker"
-                            (click)="EducationstartDatetoggle._open($event)">
-                        <mat-datepicker-toggle #EducationstartDatetoggle style="display: none;" matIconSuffix
-                            [for]="EducationstartDatepicker">
-                        </mat-datepicker-toggle>
-                        <mat-datepicker #EducationstartDatepicker></mat-datepicker>
+                    <div class="form-group">
+                        <label for="EduDescription">Education Description</label>
+                        <div class="form-control clickable no-focus no-border editor-content"
+                            (click)="openEditor('Education Description', educationForm.get('educationDesc'))"
+                            [innerHTML]="educationForm.get('educationDesc')?.value || ''">
+                        </div>
                     </div>
-                    <div class="form-group col-lg-5">
-                        <label class="required" for="lastName">End Date</label>
-                        <input class="form-control date-input clickable" readonly="true" id="EducationEndDate" matInput
-                            [matDatepicker]="EducationEndDatepicker" (click)="EducationEndDatetoggle._open($event)">
-                        <mat-datepicker-toggle #EducationEndDatetoggle style="display: none;" matIconSuffix
-                            [for]="EducationEndDatepicker">
-                        </mat-datepicker-toggle>
-                        <mat-datepicker #EducationEndDatepicker></mat-datepicker>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="EduDescription">Education Description</label>
-                    <angular-editor id="EduDescription" class="form-control clickable no-focus no-border"
-                        (click)="openEditor('Education Description')" placeholder="Enter text" [config]="editorConfig">
-                    </angular-editor>
 
                 </div>
-                <button matTooltip="Add additionalEducation Details" type="button"
-                    class="btn btn-link link-button ps-0">
-                    <mat-icon class="align-middle">add</mat-icon>Add Education
-                </button>
-            </div>
+            </ng-container>
+            <button (click)="addEducation()" matTooltip="Add additionalEducation Details" type="button"
+                class="btn btn-link link-button ps-0">
+                <mat-icon class="align-middle">add</mat-icon>Add Education
+            </button>
             <div class="d-flex flex-row-reverse justify-content-between">
-                <button type="submit" class="btn btn-primary">Generate</button>
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()">Generate</button>
             </div>
         </form>
     </div>
