@@ -1,0 +1,9 @@
+<h2 class="mb-0 display-2" mat-dialog-title>{{data?.title}}</h2>
+<mat-dialog-content class="mat-typography pb-0">
+    <angular-editor [placeholder]="'Enter text'" [(ngModel)]="htmlContent" [config]="editorConfig">
+    </angular-editor>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button class="btn btn-outline-primary me-2" mat-dialog-close>Cancel</button>
+    <button class="btn btn-primary  me-2" (click)="onSave()" cdkFocusInitial>Save</button>
+</mat-dialog-actions>

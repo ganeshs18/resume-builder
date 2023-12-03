@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+angular-editor-toolbar button i {
+    font-family: 'FontAwesome' !important;
+    color: #474d6d !important;
+
+}
+
+.clickable {
+    cursor: pointer !important;
+}
+
+.no-focus:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+}
+
+
+.add-text {
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.link-icon {
+    font-size: 14px;
+    height: 14px;
+    width: 14px;
+}
+
+angular-editor.no-border .angular-editor .angular-editor-wrapper .angular-editor-textarea {
+    border: none !important;
+    resize: none !important;
+}
